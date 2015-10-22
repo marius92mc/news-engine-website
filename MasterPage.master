@@ -1,0 +1,217 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style type="text/css">
+        input
+        {
+            margin: 5px;
+        }
+    </style>
+    <link rel="Stylesheet" type="text/css" href="dist/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+      <div class="container">
+
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+                     
+                <!--               search part     -->
+            <div id = "search_area">
+
+            <asp:TextBox ID="search_textbox" runat="server" 
+                    ontextchanged="search_textbox_TextChanged"></asp:TextBox>
+            <asp:Button ID="search_button" runat="server" Text="Search" 
+                    onclick="search_button_Click" class="btn btn-primary"/>
+            </div>
+                <!--              /search part     -->
+            <div class="navbar-brand" style="left:400px; top: -4px; position:absolute; font-size:large; "> News Engine
+                
+             </div>
+           </div>
+          
+          </div>
+          <br /> <br /> <br /> <br /> 
+        
+    <div id="categories" style="left:20%; top:20%; position:absolute;">
+      
+             <menu>
+                <asp:SqlDataSource ID="SqlDataSource_menu" runat="server" 
+                    ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True;User Instance=True" 
+                    ProviderName="System.Data.SqlClient"
+                    SelectCommand="SELECT CATEGORII.ID, CATEGORII.CATEGORY FROM CATEGORII">
+                </asp:SqlDataSource>
+             
+             <nav class="navbar navbar-default navbar-static-top" role="navigation">
+                <asp:Datalist ID = "Repeater1" runat = "server" DataSourceID = "SqlDataSource_menu" 
+                              RepeatDirection="Horizontal" >
+                    <ItemTemplate>
+                        
+                        <div class="media">
+                            <p>
+                                <a href='Result_Category.aspx?id_category=<%# DataBinder.Eval(Container.DataItem, "ID") %>'>
+                                     <%# DataBinder.Eval(Container.DataItem, "CATEGORY") %> 
+                                </a>
+                            </p>
+                            
+                        </div>
+                        
+                    </ItemTemplate>
+                    
+                   <SeparatorTemplate>
+                        &nbsp; &nbsp; &nbsp;                      
+                    </SeparatorTemplate>
+                        
+                </asp:Datalist>
+               
+               </nav>
+             </menu>
+        
+        </div>
+
+
+
+   
+    <div style="background-color: ; width: 100%; height: 170px">
+        
+        <ul style="float: left">
+            <li>
+                <asp:HyperLink ID="HyperLink1" NavigateUrl="~/Default.aspx" runat="server">News Articles</asp:HyperLink>
+            </li>
+            <asp:LoginView ID="LoginView_add_article" runat="server">
+                <RoleGroups>
+                    <asp:RoleGroup Roles="Editor">
+                        <ContentTemplate>
+                            <li>
+                                 <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Insert.aspx" runat="server">
+                                    Add article
+                                 </asp:HyperLink>
+                             </li>
+                                          
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+                </asp:LoginView>
+            
+
+
+            <asp:LoginView ID="LoginView2" runat="server">
+                <AnonymousTemplate>
+                    <li>
+                        <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Register.aspx" runat="server">Create account</asp:HyperLink>
+                    </li>
+
+                </AnonymousTemplate>
+
+                <LoggedInTemplate>
+                    <li>
+                        <asp:HyperLink ID="HyperLink3"  NavigateUrl="~/EditareProfil.aspx"  runat="server">Edit profile !</asp:HyperLink>
+                    </li>
+                </LoggedInTemplate>
+            </asp:LoginView>
+
+
+
+              <asp:LoginView ID="LoginView3" runat="server">
+                <RoleGroups>
+                    <asp:RoleGroup Roles="Member">
+                        <ContentTemplate>
+                            <li>
+                                 <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Propose_Article.aspx" runat="server">
+                                    Propose article !
+                                 </asp:HyperLink>
+                             </li>
+                                          
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+               </asp:LoginView>
+
+
+               <asp:LoginView ID="LoginView4" runat="server">
+                <RoleGroups>
+                    <asp:RoleGroup Roles="Admin">
+                        <ContentTemplate>
+                            <li>
+                                 <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Propose_Article.aspx" runat="server">
+                                    Proposed articles
+                                 </asp:HyperLink>
+                             </li>
+                                          
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+               </asp:LoginView>
+
+
+              <asp:LoginView ID="LoginView5" runat="server">
+                <RoleGroups>
+                    <asp:RoleGroup Roles="Admin">
+                        <ContentTemplate>
+                            <li>
+                                 <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Edit_Roles.aspx" runat="server">
+                                    Edit users roles
+                                 </asp:HyperLink>
+                             </li>
+                                          
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+               </asp:LoginView>
+
+              <asp:LoginView ID="LoginView6" runat="server">
+                <RoleGroups>
+                    <asp:RoleGroup Roles="Admin">
+                        <ContentTemplate>
+                            <li>
+                                 <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Categories.aspx" runat="server">
+                                    Edit categories !
+                                 </asp:HyperLink>
+                             </li>
+                                          
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+               </asp:LoginView>
+
+
+        </ul>
+        
+        <!-- -------------------------------------------------------------------- -->
+        <div style="float: right">
+            <asp:LoginView ID="LoginView1" runat="server">
+                <AnonymousTemplate>
+                    Welcome guest!
+                    <asp:Login ID="Login1" runat="server">
+                    </asp:Login>
+                </AnonymousTemplate>
+                <LoggedInTemplate>
+                    <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                    Welcome
+                    <asp:LoginName ID="LoginName1" runat="server" />
+                    !
+                </LoggedInTemplate>
+            </asp:LoginView>
+        </div>
+    </div>
+
+
+
+
+    <div>
+        <asp:ContentPlaceHolder ID="MainPlaceholder" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+
+   
+    
+    
+    </form>
+</body>
+</html>
