@@ -8,7 +8,7 @@
     <script src="dist/js/bootstrap.min.js"></script>
 
     <div id="confirmare" runat="server">
-       Do you want to delete the article called <asp:Label ID="LabelNumeCarte" runat="server" Text=""></asp:Label> ?
+       Do you want to delete the article called <asp:Label ID="LabelNumeCarte" runat="server" Text=""></asp:Label>?
        <br />
         <asp:Button ID="ButtonDa" runat="server" Text="Yes" onclick="ButtonDa_Click" class="btn btn-danger" />
         <asp:Button ID="ButtonNu" runat="server" Text="No" onclick="ButtonNu_Click" class="btn btn-success" />
